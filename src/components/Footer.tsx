@@ -65,11 +65,12 @@ export default function Footer({ onNavigate }: { onNavigate?: (page: string) => 
             <ul className="space-y-6 text-sm">
               <li className="flex gap-4">
                 <MapPin className="w-5 h-5 text-[#d8b4fe] shrink-0" />
-                <span className="leading-relaxed">No 5, Kumbakonam Road, Panruti, Tamil Nadu 607106</span>
+                <span className="leading-relaxed">No.5b, 2, Cuddalore Main Rd, opp. bus stand, Ulunthampattu, Panruti, Tamil Nadu 607106</span>
               </li>
               <li className="flex gap-4 items-center">
                 <Phone className="w-5 h-5 text-[#d8b4fe] shrink-0" />
-                <div className="flex flex-col">
+                <div className="flex flex-col space-y-0.5">
+                  <a href="tel:9944416643" className="hover:text-white transition-colors">+91 99444 16643</a>
                   <a href="tel:9566789171" className="hover:text-white transition-colors">+91 95667 89171</a>
                   <a href="tel:9865666233" className="hover:text-white transition-colors">+91 98656 66233</a>
                 </div>

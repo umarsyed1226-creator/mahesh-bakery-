@@ -1112,7 +1112,8 @@ export default function App() {
                                 </div>
                                 <div>
                                   <h4 className="font-bold text-[#2c1b40] text-base leading-tight">Phone</h4>
-                                  <div className="flex flex-col text-gray-500 font-medium text-sm mt-1 font-mono">
+                                  <div className="flex flex-col text-gray-500 font-medium text-sm mt-1 font-mono space-y-0.5">
+                                    <a href="tel:9944416643" className="hover:text-[#4f3370] transition-colors">+91 99444 16643</a>
                                     <a href="tel:9566789171" className="hover:text-[#4f3370] transition-colors">+91 95667 89171</a>
                                     <a href="tel:9865666233" className="hover:text-[#4f3370] transition-colors">+91 98656 66233</a>
                                   </div>
@@ -1138,7 +1139,7 @@ export default function App() {
                                 <div className="flex-1">
                                   <h4 className="font-bold text-[#2c1b40] text-base leading-tight">Address</h4>
                                   <p className="text-gray-500 font-medium text-xs sm:text-sm mt-1 leading-snug">
-                                    No 5, Kumbakonam Road, Panruti, Tamil Nadu 607106
+                                    No.5b, 2, Cuddalore Main Rd, opp. bus stand, Ulunthampattu, Panruti, Tamil Nadu 607106
                                   </p>
                                 </div>
                               </div>
