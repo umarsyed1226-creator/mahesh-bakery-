@@ -63,9 +63,12 @@ export default function Footer({ onNavigate }: { onNavigate?: (page: string) => 
           <div>
             <h4 className="text-white font-serif font-bold text-lg mb-6">Contact</h4>
             <ul className="space-y-6 text-sm">
-              <li className="flex gap-4">
-                <MapPin className="w-5 h-5 text-[#d8b4fe] shrink-0" />
-                <span className="leading-relaxed">No.5b, 2, Cuddalore Main Rd, opp. bus stand, Ulunthampattu, Panruti, Tamil Nadu 607106</span>
+              <li className="flex gap-4 items-start">
+                <MapPin className="w-5 h-5 text-[#d8b4fe] shrink-0 mt-0.5" />
+                <div className="space-y-1.5 leading-relaxed text-xs sm:text-sm text-white/90">
+                  <p>1. No.5b, 2, Cuddalore Main Rd, opp. bus stand, Ulunthampattu, Panruti</p>
+                  <p>2. No 5, Kumbakonam Road, Panruti</p>
+                </div>
               </li>
               <li className="flex gap-4 items-center">
                 <Phone className="w-5 h-5 text-[#d8b4fe] shrink-0" />

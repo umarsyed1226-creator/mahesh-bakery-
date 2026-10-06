@@ -1132,15 +1132,26 @@ export default function App() {
                               </div>
 
                               {/* Address Card */}
-                              <div className="bg-white rounded-3xl p-5 border border-purple-50/10 shadow-[0_10px_35px_rgba(79,51,112,0.02)] flex items-center gap-4.5">
-                                <div className="w-12 h-12 rounded-full bg-[#4f3370] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#4f3370]/15">
+                              <div className="bg-white rounded-3xl p-5 border border-purple-50/10 shadow-[0_10px_35px_rgba(79,51,112,0.02)] flex items-start gap-4.5">
+                                <div className="w-12 h-12 rounded-full bg-[#4f3370] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#4f3370]/15 mt-0.5">
                                   <MapPin className="w-5 h-5" />
                                 </div>
-                                <div className="flex-1">
-                                  <h4 className="font-bold text-[#2c1b40] text-base leading-tight">Address</h4>
-                                  <p className="text-gray-500 font-medium text-xs sm:text-sm mt-1 leading-snug">
-                                    No.5b, 2, Cuddalore Main Rd, opp. bus stand, Ulunthampattu, Panruti, Tamil Nadu 607106
-                                  </p>
+                                <div className="flex-1 space-y-2.5">
+                                  <h4 className="font-bold text-[#2c1b40] text-base leading-tight">Our Addresses</h4>
+                                  <div className="space-y-2 text-xs sm:text-sm">
+                                    <div className="pb-2 border-b border-gray-100">
+                                      <span className="font-bold text-[#4f3370] block text-[11px] uppercase tracking-wider mb-0.5">1. Main Branch</span>
+                                      <p className="text-gray-500 font-medium leading-snug">
+                                        No.5b, 2, Cuddalore Main Rd, opp. bus stand, Ulunthampattu, Panruti, Tamil Nadu 607106
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <span className="font-bold text-[#4f3370] block text-[11px] uppercase tracking-wider mb-0.5">2. Kumbakonam Road Branch</span>
+                                      <p className="text-gray-500 font-medium leading-snug">
+                                        No 5, Kumbakonam Road, Panruti, Tamil Nadu 607106
+                                      </p>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
 
