@@ -17,7 +17,7 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight drop-shadow-sm text-[#2c1b40]"
           >
-            Welcome to Mahesh Super Bakery & Sweets
+            Welcome to Maheshbakery and Sweets
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -25,7 +25,7 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-lg md:text-xl text-gray-600 leading-relaxed font-medium"
           >
-            For nearly five decades, Mahesh Super Bakery & Sweets has been a beloved landmark of taste, quality, and tradition in Panruti. Established in 1977, we have grown alongside our community, serving generations of families with the finest selection of freshly baked goods, artisanal celebration cakes, and authentic Indian sweets.
+            For over five decades, Maheshbakery and Sweets has been a beloved landmark of taste, quality, and tradition in Panruti. Established in 1972, we have grown alongside our community, serving generations of families with the finest selection of freshly baked goods, artisanal celebration cakes, and authentic Indian sweets.
           </motion.p>
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-bold text-[#2c1b40] mb-3">Our Legacy</h3>
               <p className="text-gray-600 font-medium leading-relaxed">
-                Rooted in a 49-year culinary heritage, we blend time-honored traditional recipes with modern baking techniques to deliver perfection.
+                Rooted in a 54-year culinary heritage, we blend time-honored traditional recipes with modern baking techniques to deliver perfection.
               </p>
             </motion.div>
           </div>
@@ -161,7 +161,7 @@ export default function About() {
            <div className="relative z-10 max-w-3xl mx-auto">
              <h2 className="text-3xl font-black mb-6 text-[#FFB01A]">Our Promise to You</h2>
              <p className="text-lg md:text-xl font-medium leading-relaxed text-white/90">
-               Whether you are popping in for a quick cup of hot tea and a snack before catching your bus, or ordering a custom dream cake for your child’s birthday, <strong className="text-white">Mahesh Super Bakery & Sweets</strong> guarantees exceptional flavor, pristine hygiene, and warm hospitality every single time.
+               Whether you are popping in for a quick cup of hot tea and a snack before catching your bus, or ordering a custom dream cake for your child’s birthday, <strong className="text-white">Maheshbakery and Sweets</strong> guarantees exceptional flavor, pristine hygiene, and warm hospitality every single time.
              </p>
            </div>
         </div>
