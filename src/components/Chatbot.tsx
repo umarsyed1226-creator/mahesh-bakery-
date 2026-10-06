@@ -55,7 +55,7 @@ const MENU_KNOWLEDGE = [
   { name: 'Red Velvet Cake', price: 900, priceText: '₹900 / kg', category: 'Cakes' },
   { name: 'Almond Torte', price: 50, priceText: '₹50 / pc', category: 'Cakes' },
   { name: 'Chocolate Dessert', price: 40, priceText: '₹40 / pc', category: 'Cakes' },
-  { name: 'Donut', price: 30, priceText: '₹30 / pc', category: 'Cakes' },
+  { name: 'Donut', price: 40, priceText: '₹40 / pc', category: 'Cakes' },
   { name: 'Dream Cake', price: 1200, priceText: '₹1200 / box', category: 'Cakes' },
   { name: 'Mousse Cake', price: 900, priceText: '₹900 / kg', category: 'Cakes' },
   { name: 'Rainbow Cake', price: 900, priceText: '₹900 / kg', category: 'Cakes' },

@@ -358,8 +358,8 @@ const MENU_ITEMS: MenuItem[] = [
   {
     id: 'cake-9',
     name: 'Donut',
-    price: 30,
-    priceText: '₹30 / pc',
+    price: 40,
+    priceText: '₹40 / pc',
     category: 'Cakes',
     image: 'https://ik.imagekit.io/0boxn146f/df45ede1-591c-4cbe-b567-956578ce7a32.png',
     description: 'Soft, airy golden fried ring donut covered in sweet classic glaze or chocolate icing.',
