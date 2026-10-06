@@ -1,0 +1,21 @@
+export type CartItem = {
+  id: string;
+  sizeLabel: string;
+  sizePrice: number;
+  name: string;
+  age: string;
+  message: string;
+  photoUrl: string;
+  toppings: string[];
+  toppingsTotal: number;
+  itemTotal: number;
+  quantity: number;
+  date: string;
+  time: string;
+  grandTotal: number;
+  category?: string;
+  customerPhone?: string;
+  customerName?: string;
+  customerAddress?: string;
+  customerEmail?: string;
+};

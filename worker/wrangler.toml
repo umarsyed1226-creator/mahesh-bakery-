@@ -1,0 +1,9 @@
+name = "mahesh-bakery-api"
+main = "src/index.ts"
+compatibility_date = "2025-07-14"
+
+# Free plan limits: 100,000 requests/day, 10ms CPU time
+# More than enough for a bakery chatbot!
+
+[vars]
+ENVIRONMENT = "production"

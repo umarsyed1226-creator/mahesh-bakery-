@@ -1,0 +1,15 @@
+{
+  "name": "mahesh-bakery-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0",
+    "typescript": "^5.8.0",
+    "@cloudflare/workers-types": "^4.20250709.0"
+  }
+}

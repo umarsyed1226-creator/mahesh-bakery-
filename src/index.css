@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Comfortaa:wght@600;700;900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@400;600;700;800;900&family=Prata&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-serif-logo: "Bodoni Moda", "Playfair Display", serif;
+  --font-roboto: "Comfortaa", cursive, sans-serif;
+  --font-logo: "Comfortaa", "Montserrat", sans-serif;
+}
+
+/* Custom logo branding classes based on exact requested specs */
+.bakery-main-title {
+  font-family: 'Poppins', sans-serif !important;
+  color: #ffbc00 !important;
+  font-weight: 800 !important;
+  text-transform: lowercase !important;
+  letter-spacing: -1.5px !important;
+}
+
+.bakery-subtitle {
+  font-family: 'Playfair Display', serif !important;
+  color: #ffffff;
+  font-style: italic !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+  word-spacing: 2px !important;
+}
+
+/* Custom subtle scrollbar for horizontal suggestion containers */
+.custom-scrollbar-horizontal::-webkit-scrollbar {
+  height: 5px;
+}
+.custom-scrollbar-horizontal::-webkit-scrollbar-track {
+  background: #fff1f2;
+  border-radius: 9999px;
+}
+.custom-scrollbar-horizontal::-webkit-scrollbar-thumb {
+  background: #fecdd3;
+  border-radius: 9999px;
+  border: 1px solid #fff1f2;
+}
+.custom-scrollbar-horizontal::-webkit-scrollbar-thumb:hover {
+  background: #fda4af;
+}
+
+/* Shake animation for error popups */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-6px); }
+  30% { transform: translateX(5px); }
+  45% { transform: translateX(-4px); }
+  60% { transform: translateX(3px); }
+  75% { transform: translateX(-2px); }
+}

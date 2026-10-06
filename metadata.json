@@ -1,0 +1,6 @@
+{
+  "name": ".BERRY. Bakery Landing Page",
+  "description": "A modern, vibrant structural UI landing page design for a premium bakery with a fluid split layout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
