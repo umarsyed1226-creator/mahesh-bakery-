@@ -140,7 +140,7 @@ export default function Login({ onLogin, notice }: { onLogin: (email: string, pa
         <div className="flex flex-col items-center justify-center text-center mb-8">
           <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-purple-100 shadow-[0_8px_30px_rgba(79,51,112,0.15)] mb-4 shrink-0 transition-transform duration-300 hover:scale-105 bg-[#4f3370]">
             <img 
-              src="https://ik.imagekit.io/exmpcpadx/image.png" 
+              src="https://ik.imagekit.io/du3lqlqsw/image.webp" 
               alt="Mahesh Bakery Logo" 
               className="w-full h-full object-cover" 
               referrerPolicy="no-referrer"

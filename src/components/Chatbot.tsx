@@ -464,7 +464,7 @@ export default function Chatbot() {
           ) : (
             <div className="relative w-full h-full rounded-full flex items-center justify-center">
               <img 
-                src="https://ik.imagekit.io/exmpcpadx/image.png" 
+                src="https://ik.imagekit.io/du3lqlqsw/image.webp" 
                 alt="Mahesh Assistant" 
                 className="w-full h-full object-cover rounded-full" 
                 referrerPolicy="no-referrer"
@@ -495,7 +495,7 @@ export default function Chatbot() {
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-white/20 relative overflow-hidden">
                   <img 
-                    src="https://ik.imagekit.io/exmpcpadx/image.png" 
+                    src="https://ik.imagekit.io/du3lqlqsw/image.webp" 
                     alt="Mahesh Assistant Logo" 
                     className="w-full h-full object-cover rounded-full" 
                     referrerPolicy="no-referrer"

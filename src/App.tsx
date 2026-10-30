@@ -98,7 +98,7 @@ export default function App() {
           >
             <div className="w-9 h-9 md:w-9 md:h-9 lg:w-11 lg:h-11 rounded-full overflow-hidden border border-white/20 shadow-md shrink-0">
               <img
-                src="https://ik.imagekit.io/exmpcpadx/image.png"
+                src="https://ik.imagekit.io/du3lqlqsw/image.webp"
                 alt="Mahesh Bakery Logo"
                 className="w-full h-full object-cover"
               />
@@ -227,7 +227,7 @@ export default function App() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="w-44 h-44 flex items-center justify-center relative"
           >
-            <img src="https://ik.imagekit.io/exmpcpadx/image.png" alt="Mahesh Bakery" className="w-44 h-44 object-cover rounded-full" />
+            <img src="https://ik.imagekit.io/du3lqlqsw/image.webp" alt="Mahesh Bakery" className="w-44 h-44 object-cover rounded-full" />
           </motion.div>
 
           {/* Stylized "mahesh" & Slogan */}
