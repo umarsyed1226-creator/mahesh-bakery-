@@ -355,6 +355,13 @@ export default function App() {
                       style={{ backgroundImage: "url('https://ik.imagekit.io/walxjspjl/99230860-1515-494e-be7a-d90cb411dc3c.png')" }}
                       onClick={() => setCurrentPage('birthday-cakes')}
                     >
+                      {/* Mobile view banner image */}
+                      <img
+                        src="https://ik.imagekit.io/walxjspjl/02082def-f482-4947-a789-33f2932e65a8.png"
+                        alt="Birthday Cake Promotion"
+                        className="md:hidden absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
+                      />
+
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
