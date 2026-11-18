@@ -19,6 +19,8 @@ import AdminPanel from './components/AdminPanel';
 import Gallery from './components/Gallery';
 import OurOwnMake from './components/OurOwnMake';
 import Branches from './components/Branches';
+import BirthdayCakes from './components/BirthdayCakes';
+import BottomNav from './components/BottomNav';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { auth, db } from './firebase';
@@ -113,8 +115,9 @@ export default function App() {
             </div>
           </div>
 
-          <div className="hidden lg:flex flex-1 items-center justify-center gap-4 lg:gap-6 xl:gap-10 font-bold tracking-wide lg:text-sm xl:text-base whitespace-nowrap">
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-3 xl:gap-7 font-bold tracking-wide lg:text-sm xl:text-base whitespace-nowrap">
             <button onClick={() => setCurrentPage('home')} className={`hover:text-rose-200 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:bg-rose-200 after:transition-all ${currentPage === 'home' ? 'text-rose-200 after:w-full' : 'after:w-0 hover:after:w-full'}`}>Home</button>
+            <button onClick={() => setCurrentPage('birthday-cakes')} className={`hover:text-amber-300 text-amber-200 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:bg-amber-300 after:transition-all ${currentPage === 'birthday-cakes' ? 'text-amber-300 after:w-full' : 'after:w-0 hover:after:w-full'}`}>Birthday Cakes ⚡</button>
             <button onClick={() => setCurrentPage('menu')} className={`hover:text-rose-200 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:bg-rose-200 after:transition-all ${currentPage === 'menu' ? 'text-rose-200 after:w-full' : 'after:w-0 hover:after:w-full'}`}>Menu</button>
             <button onClick={() => setCurrentPage('own-make')} className={`hover:text-rose-200 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:bg-rose-200 after:transition-all ${currentPage === 'own-make' ? 'text-rose-200 after:w-full' : 'after:w-0 hover:after:w-full'}`}>Our Own Make</button>
             <button onClick={() => setCurrentPage('about')} className={`hover:text-rose-200 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:bg-rose-200 after:transition-all ${currentPage === 'about' ? 'text-rose-200 after:w-full' : 'after:w-0 hover:after:w-full'}`}>About</button>
@@ -182,6 +185,7 @@ export default function App() {
             >
               {[
                 { label: 'Home', page: 'home' },
+                { label: 'Birthday Cakes ⚡', page: 'birthday-cakes' },
                 { label: 'Menu', page: 'menu' },
                 { label: 'Our Own Make', page: 'own-make' },
                 { label: 'About', page: 'about' },
@@ -258,7 +262,7 @@ export default function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="relative min-h-screen bg-[#fcfbfe] flex flex-col overflow-x-hidden font-sans text-[#2c1b40]"
+          className="relative min-h-screen bg-[#fcfbfe] flex flex-col overflow-x-hidden font-sans text-[#2c1b40] pb-16 lg:pb-0"
         >
           <div className="sticky top-0 z-50">
             {navbar}
@@ -328,8 +332,7 @@ export default function App() {
                     className="max-w-7xl mx-auto rounded-[2.5rem] overflow-hidden shadow-[0_25px_60px_rgba(79,51,112,0.06)] border border-purple-100 group relative"
                   >
                     <div
-                      onClick={() => setIsPreviewOpen(true)}
-                      className="relative overflow-hidden w-full cursor-zoom-in"
+                      className="relative overflow-hidden w-full"
                     >
                       {/* Interactive slide/fade animation */}
                       <AnimatePresence mode="wait">
@@ -345,16 +348,6 @@ export default function App() {
                           referrerPolicy="no-referrer"
                         />
                       </AnimatePresence>
-
-                      {/* Hover Overlay with beautiful prompt */}
-                      <div className="absolute inset-0 bg-black/5 group-hover:bg-black/25 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                        <div className="bg-white/90 backdrop-blur-md text-[#4f3370] px-6 py-3 rounded-full flex items-center gap-2 font-bold text-sm shadow-xl border border-purple-100/10 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                          </svg>
-                          <span>Full View Poster</span>
-                        </div>
-                      </div>
                     </div>
 
                     {/* Navigation Arrows */}
@@ -891,6 +884,19 @@ export default function App() {
                       }}
                     />
                   )}
+                  {currentPage === 'birthday-cakes' && (
+                    <BirthdayCakes
+                      isAuthenticated={!!user}
+                      user={user}
+                      onAddToCart={(item) => setCartItems([...cartItems, item])}
+                      onViewCart={() => setCurrentPage('cart')}
+                      onRequiresAuth={() => {
+                        setLoginNotice("Please sign in or create an account to proceed with your order.");
+                        setCurrentPage('login');
+                      }}
+                      onNavigateHome={() => setCurrentPage('home')}
+                    />
+                  )}
                   {currentPage === 'menu' && (
                     <Menu
                       isAuthenticated={!!user}
@@ -1210,6 +1216,7 @@ export default function App() {
             )}
           </div>
           <Chatbot />
+          <BottomNav currentPage={currentPage} onNavigate={setCurrentPage} user={user} />
 
           {/* Full Screen Image Lightbox / Viewer */}
           <AnimatePresence>

@@ -16,7 +16,7 @@ export interface MenuItem {
   tag?: string;
 }
 
-const MENU_ITEMS: MenuItem[] = [
+export const MENU_ITEMS: MenuItem[] = [
   // Biscuits
   {
     id: 'bisc-1',

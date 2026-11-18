@@ -38,6 +38,7 @@ export default function Footer({ onNavigate }: { onNavigate?: (page: string) => 
             <h4 className="text-white font-serif font-bold text-lg mb-6">Quick Links</h4>
             <ul className="space-y-4 text-sm">
               <li><a href="#" className="hover:text-[#d8b4fe] transition-colors" onClick={(e) => { e.preventDefault(); if (onNavigate) onNavigate('home'); }}>Home</a></li>
+              <li><a href="#" className="hover:text-[#d8b4fe] transition-colors text-amber-200" onClick={(e) => { e.preventDefault(); if (onNavigate) onNavigate('birthday-cakes'); }}>Birthday Cakes ⚡</a></li>
               <li><a href="#" className="hover:text-[#d8b4fe] transition-colors" onClick={(e) => { e.preventDefault(); if (onNavigate) onNavigate('menu'); }}>Cakes</a></li>
               <li><a href="#" className="hover:text-[#d8b4fe] transition-colors" onClick={(e) => { e.preventDefault(); if (onNavigate) onNavigate('own-make'); }}>Our Own Make</a></li>
               <li><a href="#" className="hover:text-[#d8b4fe] transition-colors">Workshop Booking</a></li>
