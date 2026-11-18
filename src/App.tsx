@@ -292,7 +292,7 @@ export default function App() {
                     <p className="text-gray-600 font-medium text-base sm:text-lg mb-8 sm:mb-10 max-w-md leading-relaxed">
                       Indulging sweet dreams, our cakes are a celebration of flavor and artistry. Indulge in a world of decadence, where each slice is a moment of pure bliss.
                     </p>
-                    <button onClick={() => setCurrentPage('menu')} className="bg-[#4f3370] text-white px-8 py-4 sm:px-10 sm:py-5 rounded-full font-bold text-base sm:text-lg hover:bg-[#3d2757] transition-colors shadow-lg hover:shadow-[#4f3370]/40 flex items-center gap-2 group">
+                    <button onClick={() => setCurrentPage('birthday-cakes')} className="bg-[#4f3370] text-white px-8 py-4 sm:px-10 sm:py-5 rounded-full font-bold text-base sm:text-lg hover:bg-[#3d2757] transition-colors shadow-lg hover:shadow-[#4f3370]/40 flex items-center gap-2 group cursor-pointer">
                       Make An Order
                       <span className="group-hover:translate-x-1 transition-transform">→</span>
                     </button>
