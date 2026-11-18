@@ -4,7 +4,7 @@
  */
 
 import { motion, AnimatePresence } from 'motion/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Award, Cake, Truck, Heart, MapPin, ShoppingBag, User, Phone, Mail, Clock, Instagram, Send, ChevronLeft, ChevronRight, X, Star, Quote, Menu as MenuIcon } from 'lucide-react';
 import Footer from './components/Footer';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -55,6 +55,30 @@ export default function App() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const [isHoveringBanner, setIsHoveringBanner] = useState(false);
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+  const [isHoveringHero, setIsHoveringHero] = useState(false);
+  const heroScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollToHeroSlide = (index: number) => {
+    if (!heroScrollRef.current) return;
+    const clientWidth = heroScrollRef.current.clientWidth;
+    heroScrollRef.current.scrollTo({
+      left: index * clientWidth,
+      behavior: 'smooth'
+    });
+    setCurrentHeroSlide(index);
+  };
+
+  const handleHeroScroll = () => {
+    if (!heroScrollRef.current) return;
+    const { scrollLeft, clientWidth } = heroScrollRef.current;
+    if (clientWidth > 0) {
+      const slideIndex = Math.round(scrollLeft / clientWidth);
+      if (slideIndex !== currentHeroSlide && (slideIndex === 0 || slideIndex === 1)) {
+        setCurrentHeroSlide(slideIndex);
+      }
+    }
+  };
   const [activeCategoryModal, setActiveCategoryModal] = useState<{
     title: string;
     image: string;
@@ -89,6 +113,14 @@ export default function App() {
     }, 4500);
     return () => clearInterval(bannerTimer);
   }, [isHoveringBanner]);
+
+  useEffect(() => {
+    if (isHoveringHero) return;
+    const heroTimer = setInterval(() => {
+      scrollToHeroSlide(currentHeroSlide === 0 ? 1 : 0);
+    }, 5000);
+    return () => clearInterval(heroTimer);
+  }, [currentHeroSlide, isHoveringHero]);
 
   const navbar = (
     <nav className="relative z-20 w-full bg-[#4f3370] shadow-md text-white">
@@ -271,33 +303,108 @@ export default function App() {
           <div className="flex-1 flex flex-col">
             {currentPage === 'home' ? (
               <>
-                {/* Hero Section */}
-                <div
-                  className="relative min-h-[calc(100vh-160px)] flex flex-col items-start justify-start px-6 lg:px-16 lg:px-24 bg-cover bg-center pt-12 lg:pt-24 pb-24 overflow-hidden"
-                  style={{ backgroundImage: "url('https://ik.imagekit.io/mc0i0aav7i/1c0a53f5-6dc7-48c8-afe5-682f3a9983a5.png')" }}
+                {/* Hero Section - Row Scrollable Banners */}
+                <div 
+                  className="relative w-full overflow-hidden group select-none"
+                  onMouseEnter={() => setIsHoveringHero(true)}
+                  onMouseLeave={() => setIsHoveringHero(false)}
                 >
-
-                  {/* Typography Content */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="w-full md:w-[75%] lg:w-1/2 max-w-2xl flex flex-col items-start z-10"
+                  <div
+                    ref={heroScrollRef}
+                    onScroll={handleHeroScroll}
+                    className="w-full flex flex-row overflow-x-auto snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]"
                   >
-                    <h1 className="text-5xl sm:text-6xl md:text-[4rem] lg:text-[4.5rem] xl:text-[5.5rem] font-sans font-black text-[#2c1b40] leading-[1.05] mb-4 sm:mb-6 tracking-tight drop-shadow-sm">
-                      Sweet<br />
-                      Celebrations<br />
-                      Begin Here
-                    </h1>
-                    <p className="text-gray-600 font-medium text-base sm:text-lg mb-8 sm:mb-10 max-w-md leading-relaxed">
-                      Indulging sweet dreams, our cakes are a celebration of flavor and artistry. Indulge in a world of decadence, where each slice is a moment of pure bliss.
-                    </p>
-                    <button onClick={() => setCurrentPage('birthday-cakes')} className="bg-[#4f3370] text-white px-8 py-4 sm:px-10 sm:py-5 rounded-full font-bold text-base sm:text-lg hover:bg-[#3d2757] transition-colors shadow-lg hover:shadow-[#4f3370]/40 flex items-center gap-2 group cursor-pointer">
-                      Make An Order
-                      <span className="group-hover:translate-x-1 transition-transform">→</span>
-                    </button>
-                  </motion.div>
+                    {/* Slide 1 (First Banner): Birthday Cake Special Banner */}
+                    <div
+                      className="w-full min-w-full shrink-0 snap-center relative min-h-[calc(100vh-160px)] flex flex-col items-start justify-end px-6 lg:px-16 lg:px-24 bg-cover bg-center pt-12 lg:pt-24 pb-20 lg:pb-24 overflow-hidden cursor-pointer"
+                      style={{ backgroundImage: "url('https://ik.imagekit.io/walxjspjl/99230860-1515-494e-be7a-d90cb411dc3c.png')" }}
+                      onClick={() => setCurrentPage('birthday-cakes')}
+                    >
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentPage('birthday-cakes');
+                        }}
+                        className="bg-[#4f3370] text-white px-8 py-4 sm:px-10 sm:py-5 rounded-full font-bold text-base sm:text-lg hover:bg-[#3d2757] transition-all shadow-xl hover:shadow-[#4f3370]/50 flex items-center gap-2 group cursor-pointer active:scale-95 border border-white/20 z-10"
+                      >
+                        Make An Order
+                        <span className="group-hover:translate-x-1 transition-transform">→</span>
+                      </button>
+                    </div>
 
+                    {/* Slide 2 (Second Banner): Sweet Celebrations Begin Here (Reference Banner) */}
+                    <div
+                      className="w-full min-w-full shrink-0 snap-center relative min-h-[calc(100vh-160px)] flex flex-col items-start justify-start px-6 lg:px-16 lg:px-24 bg-cover bg-center pt-12 lg:pt-24 pb-24 overflow-hidden"
+                      style={{ backgroundImage: "url('https://ik.imagekit.io/mc0i0aav7i/1c0a53f5-6dc7-48c8-afe5-682f3a9983a5.png')" }}
+                    >
+                      {/* Typography Content */}
+                      <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="w-full md:w-[75%] lg:w-1/2 max-w-2xl flex flex-col items-start z-10"
+                      >
+                        <h1 className="text-5xl sm:text-6xl md:text-[4rem] lg:text-[4.5rem] xl:text-[5.5rem] font-sans font-black text-[#2c1b40] leading-[1.05] mb-4 sm:mb-6 tracking-tight drop-shadow-sm">
+                          Sweet<br />
+                          Celebrations<br />
+                          Begin Here
+                        </h1>
+                        <p className="text-gray-600 font-medium text-base sm:text-lg mb-8 sm:mb-10 max-w-md leading-relaxed">
+                          Indulging sweet dreams, our cakes are a celebration of flavor and artistry. Indulge in a world of decadence, where each slice is a moment of pure bliss.
+                        </p>
+                        <button onClick={() => setCurrentPage('birthday-cakes')} className="bg-[#4f3370] text-white px-8 py-4 sm:px-10 sm:py-5 rounded-full font-bold text-base sm:text-lg hover:bg-[#3d2757] transition-colors shadow-lg hover:shadow-[#4f3370]/40 flex items-center gap-2 group cursor-pointer">
+                          Make An Order
+                          <span className="group-hover:translate-x-1 transition-transform">→</span>
+                        </button>
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* Left & Right Navigation Arrows */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      scrollToHeroSlide(currentHeroSlide === 0 ? 1 : 0);
+                    }}
+                    aria-label="Previous Slide"
+                    className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/85 hover:bg-white text-[#4f3370] shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95 backdrop-blur-sm cursor-pointer"
+                  >
+                    <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      scrollToHeroSlide(currentHeroSlide === 0 ? 1 : 0);
+                    }}
+                    aria-label="Next Slide"
+                    className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/85 hover:bg-white text-[#4f3370] shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95 backdrop-blur-sm cursor-pointer"
+                  >
+                    <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </button>
+
+                  {/* Dot Indicators */}
+                  <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-[#2c1b40]/30 backdrop-blur-md px-3 py-1.5 rounded-full">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        scrollToHeroSlide(0);
+                      }}
+                      aria-label="Go to banner 1"
+                      className={`transition-all duration-300 rounded-full h-2.5 cursor-pointer ${currentHeroSlide === 0 ? 'w-8 bg-[#4f3370]' : 'w-2.5 bg-white/70 hover:bg-white'}`}
+                    />
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        scrollToHeroSlide(1);
+                      }}
+                      aria-label="Go to banner 2"
+                      className={`transition-all duration-300 rounded-full h-2.5 cursor-pointer ${currentHeroSlide === 1 ? 'w-8 bg-[#4f3370]' : 'w-2.5 bg-white/70 hover:bg-white'}`}
+                    />
+                  </div>
                 </div>
 
                 {/* Scrolling Marquee */}
