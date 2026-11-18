@@ -147,11 +147,13 @@ export default function BirthdayCakes({
           m.name.toLowerCase().includes(spec.targetName.toLowerCase())
       );
 
+      const halfKgPrice = Math.round(spec.basePrice * 0.5);
       return {
         id: spec.menuId,
         name: spec.targetName,
         basePrice: spec.basePrice,
-        priceText: `₹${spec.basePrice} / 1 kg`,
+        halfKgPrice,
+        priceText: `₹${halfKgPrice} / ½ kg`,
         image:
           original?.image ||
           'https://ik.imagekit.io/0boxn146f/ChatGPT%20Image%20May%2023,%202026,%2012_30_49%20PM.png',
@@ -230,7 +232,8 @@ export default function BirthdayCakes({
   // Open modal
   const handleOpenCustomization = (cake: typeof birthdayCakes[0]) => {
     setSelectedCake(cake);
-    setSelectedWeight('1');
+    // Keep selectedWeight if already set by chip click, otherwise default to ½ kg
+    if (!selectedCake) setSelectedWeight('0.5');
     setSelectedFlavour(FLAVOUR_OPTIONS[0]);
     setOccasion('birthday');
     setPersonName('');
@@ -558,8 +561,8 @@ Thank you for choosing Mahesh Bakery! 🎉`;
                       {cake.name}
                     </h3>
                     <div className="text-right shrink-0">
-                      <span className="text-2xl font-black text-[#4f3370]">₹{cake.basePrice}</span>
-                      <span className="text-xs font-semibold text-gray-400 block">for 1 KG</span>
+                      <span className="text-2xl font-black text-[#4f3370]">₹{cake.halfKgPrice}</span>
+                      <span className="text-xs font-semibold text-gray-400 block">starts at ½ KG</span>
                     </div>
                   </div>
 
