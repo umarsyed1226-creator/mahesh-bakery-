@@ -1024,11 +1024,6 @@ export default function Menu({ isAuthenticated, user, onAddToCart, onViewCart, o
               <div className="border-t border-gray-100 p-6 flex flex-col sm:flex-row gap-3 shrink-0">
                 <button 
                   onClick={() => {
-                    if (!isAuthenticated) {
-                      onRequiresAuth();
-                      setSelectedItem(null);
-                      return;
-                    }
                     const activePrice = selectedItem.category === 'Cakes' 
                       ? (cakeSize === '1' ? (modalItemDetails?.price || selectedItem.price) : (modalItemDetails?.price || selectedItem.price) / 2) 
                       : (modalItemDetails?.price || selectedItem.price) * itemQuantity;

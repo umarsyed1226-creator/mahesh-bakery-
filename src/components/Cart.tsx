@@ -31,19 +31,10 @@ export default function Cart({ cartItems, isAuthenticated, user, onRemoveItem, o
   }, [user]);
 
   const handleProceedToCheckout = () => {
-    if (!isAuthenticated) {
-      onRequiresAuth();
-      return;
-    }
     setStep('checkout');
   };
 
   const handleCheckout = () => {
-    if (!isAuthenticated) {
-      onRequiresAuth();
-      return;
-    }
-
     if (!customerName.trim() || !customerPhone.trim() || !customerAddress.trim()) {
         alert("Please fill in all delivery details (Name, Phone, and Address) before checking out.");
         return;

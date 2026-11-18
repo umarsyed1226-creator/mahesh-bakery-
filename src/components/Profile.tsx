@@ -129,8 +129,8 @@ export default function Profile({ user, onUpdateUser, onLogout, onBrowseCakes, o
   const handleSaveChanges = (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
-    if (!editEmail.toLowerCase().endsWith('@gmail.com')) {
-      setFormError('Email address must end with @gmail.com.');
+    if (!editEmail.includes('@') || !editEmail.includes('.')) {
+      setFormError('Please enter a valid email address.');
       return;
     }
     

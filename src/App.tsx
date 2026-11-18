@@ -97,7 +97,42 @@ export default function App() {
   const [contactMessage, setContactMessage] = useState('');
   const [showContactSuccess, setShowContactSuccess] = useState(false);
   const [loginNotice, setLoginNotice] = useState<string | null>(null);
+  const [returnPageAfterLogin, setReturnPageAfterLogin] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Sync Firebase authentication with local state if logged in via Firebase
+  useEffect(() => {
+    try {
+      const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+        if (firebaseUser && firebaseUser.email) {
+          const email = firebaseUser.email.toLowerCase();
+          const emailKey = `mahesh_bakery_user_profile_${email}`;
+          const savedProfileStr = safeStorage.getItem(emailKey);
+          let loadedUser;
+          if (savedProfileStr) {
+            try {
+              loadedUser = JSON.parse(savedProfileStr);
+            } catch (e) {}
+          }
+          if (!loadedUser) {
+            loadedUser = {
+              uid: firebaseUser.uid,
+              email: email,
+              name: firebaseUser.displayName || 'Cake Lover',
+              avatar: firebaseUser.photoURL || '',
+              phone: firebaseUser.phoneNumber || '',
+              isAdmin: email === 'admin@maheshbakery.com'
+            };
+          }
+          setUser(loadedUser);
+          safeStorage.setItem('mahesh_bakery_user', JSON.stringify(loadedUser));
+        }
+      });
+      return () => unsubscribe();
+    } catch (e) {
+      console.warn('onAuthStateChanged listener notice:', e);
+    }
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -955,7 +990,13 @@ export default function App() {
                         safeStorage.setItem('mahesh_bakery_user', JSON.stringify(loggedUser));
                         safeStorage.setItem(emailKey, JSON.stringify(loggedUser));
                         setLoginNotice(null);
-                        setCurrentPage('profile');
+                        if (returnPageAfterLogin) {
+                          const target = returnPageAfterLogin;
+                          setReturnPageAfterLogin(null);
+                          setCurrentPage(target);
+                        } else {
+                          setCurrentPage(isAdmin ? 'admin' : 'profile');
+                        }
                       }}
                     />
                   )}
@@ -999,6 +1040,7 @@ export default function App() {
                       onViewCart={() => setCurrentPage('cart')}
                       onRequiresAuth={() => {
                         setLoginNotice("Please sign in or create an account to proceed with your order.");
+                        setReturnPageAfterLogin('birthday-cakes');
                         setCurrentPage('login');
                       }}
                       onNavigateHome={() => setCurrentPage('home')}
@@ -1014,6 +1056,7 @@ export default function App() {
                       onPageChange={setCurrentPage}
                       onRequiresAuth={() => {
                         setLoginNotice("Please sign in or create an account to proceed with your order.");
+                        setReturnPageAfterLogin('menu');
                         setCurrentPage('login');
                       }}
                     />
@@ -1027,59 +1070,61 @@ export default function App() {
                       onBrowse={() => setCurrentPage('menu')}
                       onRequiresAuth={() => {
                         setLoginNotice("Please sign in or create an account to proceed with your checkout.");
+                        setReturnPageAfterLogin('cart');
                         setCurrentPage('login');
                       }}
                       onCheckout={async (details) => {
-                        if (user) {
-                          const newOrder = {
-                            id: `order-${Date.now()}-${Math.floor(100 + Math.random() * 900)}`,
-                            date: new Date().toLocaleDateString(),
+                        const customerEmail = user?.email || 'guest@maheshbakery.in';
+                        const newOrder = {
+                          id: `order-${Date.now()}-${Math.floor(100 + Math.random() * 900)}`,
+                          date: new Date().toLocaleDateString(),
+                          status: 'Accepted',
+                          customerEmail: customerEmail,
+                          customerName: details.name,
+                          customerPhone: details.phone,
+                          customerAddress: details.address,
+                          paymentMethod: 'Cash on Delivery',
+                          items: [...cartItems],
+                        };
+
+                        // Save order to Firestore Database
+                        try {
+                          const totalAmount = cartItems.reduce((sum, item) => sum + item.grandTotal, 0);
+                          await addDoc(collection(db, 'orders'), {
+                            userId: customerEmail,
+                            orderId: newOrder.id,
+                            date: newOrder.date,
                             status: 'Accepted',
-                            customerEmail: user.email,
                             customerName: details.name,
                             customerPhone: details.phone,
                             customerAddress: details.address,
                             paymentMethod: 'Cash on Delivery',
-                            items: [...cartItems],
-                          };
+                            totalAmount,
+                            items: cartItems.map(item => ({
+                              sizeLabel: item.sizeLabel || '',
+                              sizePrice: item.sizePrice || 0,
+                              name: item.name || '',
+                              age: item.age || '',
+                              message: item.message || '',
+                              photoUrl: item.photoUrl || '',
+                              toppings: item.toppings || [],
+                              toppingsTotal: item.toppingsTotal || 0,
+                              itemTotal: item.itemTotal || 0,
+                              quantity: item.quantity || 1,
+                              date: item.date || '',
+                              time: item.time || '',
+                              grandTotal: item.grandTotal || 0,
+                              category: item.category || '',
+                            })),
+                            createdAt: Timestamp.now()
+                          });
+                          console.log('Order saved to Firestore successfully!');
+                        } catch (firestoreErr) {
+                          console.warn('Order saved locally (Firestore offline):', firestoreErr);
+                        }
 
-                          // Save order to Firestore Database
-                          try {
-                            const totalAmount = cartItems.reduce((sum, item) => sum + item.grandTotal, 0);
-                            await addDoc(collection(db, 'orders'), {
-                              userId: user.email,
-                              orderId: newOrder.id,
-                              date: newOrder.date,
-                              status: 'Accepted',
-                              customerName: details.name,
-                              customerPhone: details.phone,
-                              customerAddress: details.address,
-                              paymentMethod: 'Cash on Delivery',
-                              totalAmount,
-                              items: cartItems.map(item => ({
-                                sizeLabel: item.sizeLabel || '',
-                                sizePrice: item.sizePrice || 0,
-                                name: item.name || '',
-                                age: item.age || '',
-                                message: item.message || '',
-                                photoUrl: item.photoUrl || '',
-                                toppings: item.toppings || [],
-                                toppingsTotal: item.toppingsTotal || 0,
-                                itemTotal: item.itemTotal || 0,
-                                quantity: item.quantity || 1,
-                                date: item.date || '',
-                                time: item.time || '',
-                                grandTotal: item.grandTotal || 0,
-                                category: item.category || '',
-                              })),
-                              createdAt: Timestamp.now()
-                            });
-                            console.log('Order saved to Firestore successfully!');
-                          } catch (firestoreErr) {
-                            console.error('Failed to save order to Firestore:', firestoreErr);
-                          }
-
-                          // Also save to localStorage as backup/cache
+                        // Also save to localStorage as backup/cache
+                        if (user?.email) {
                           const savedOrders = safeStorage.getItem(`mahesh_bakery_orders_${user.email}`);
                           let currentOrders = [];
                           if (savedOrders) {
@@ -1091,16 +1136,21 @@ export default function App() {
                           }
                           currentOrders.unshift(newOrder);
                           safeStorage.setItem(`mahesh_bakery_orders_${user.email}`, JSON.stringify(currentOrders));
+                        }
 
-                          // Push to global orders for admin panel
-                          try {
-                            const globalOrders = JSON.parse(safeStorage.getItem('mahesh_bakery_global_orders') || '[]');
-                            globalOrders.push(newOrder);
-                            safeStorage.setItem('mahesh_bakery_global_orders', JSON.stringify(globalOrders));
-                          } catch (e) { }
+                        // Push to global orders for admin panel
+                        try {
+                          const globalOrders = JSON.parse(safeStorage.getItem('mahesh_bakery_global_orders') || '[]');
+                          globalOrders.push(newOrder);
+                          safeStorage.setItem('mahesh_bakery_global_orders', JSON.stringify(globalOrders));
+                        } catch (e) { }
 
-                          setCartItems([]);
+                        setCartItems([]);
+                        if (user) {
                           setCurrentPage('profile');
+                        } else {
+                          alert(`Thank you ${details.name}! Your order has been placed successfully.`);
+                          setCurrentPage('home');
                         }
                       }}
                     />
@@ -1115,6 +1165,7 @@ export default function App() {
                       onViewCart={() => setCurrentPage('cart')}
                       onRequiresAuth={() => {
                         setLoginNotice("Please sign in or create an account to proceed.");
+                        setReturnPageAfterLogin('own-make');
                         setCurrentPage('login');
                       }}
                     />
